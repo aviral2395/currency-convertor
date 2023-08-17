@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Currency Converter</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    padding: 20px;
+  }
+  select, input {
+    padding: 10px;
+    font-size: 16px;
+    margin: 10px;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Currency Converter</h1>
+  <select id="fromCurrency">
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+    <option value="GBP">GBP</option>
+  </select>
+  <input type="number" id="amount" placeholder="Enter amount">
+  <select id="toCurrency">
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+    <option value="GBP">GBP</option>
+  </select>
+  <button onclick="convertCurrency()">Convert</button>
+  <p id="result"></p>
+</div>
+
+<script>
+function convertCurrency() {
+  const exchangeRates = {
+    USD: {
+      EUR: 0.85,
+      GBP: 0.73
+    },
+    EUR: {
+      USD: 1.18,
+      GBP: 0.88
+    },
+    GBP: {
+      USD: 1.37,
+      EUR: 1.13
+    }
+  };
+
+  const fromCurrency = document.getElementById("fromCurrency").value;
+  const toCurrency = document.getElementById("toCurrency").value;
+  const amount = parseFloat(document.getElementById("amount").value);
+
+  if (isNaN(amount)) {
+    document.getElementById("result").textContent = "Please enter a valid amount.";
+    return;
+  }
+
+  const convertedAmount = amount * exchangeRates[fromCurrency][toCurrency];
+  document.getElementById("result").textContent = `${amount.toFixed(2)} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}`;
+}
+</script>
+</body>
+</html>
